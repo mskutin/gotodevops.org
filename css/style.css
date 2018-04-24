@@ -6,6 +6,7 @@ body {
 
 .header {
     margin: 2rem 0 4rem;
+    border-bottom: 1px solid #d4d4d4;
 }
 
 .header h1 {
@@ -21,4 +22,124 @@ thead {
 
 footer {
     text-align: center;
+}
+
+.conference {
+    border-bottom: 1px solid #d4d4d4;
+    padding: .75rem 0;
+}
+
+.conference .name{
+    /*font-size: 1.2rem;*/
+}
+
+.conference .location {
+    font-size: .85rem;
+}
+
+.conference .date {
+    font-size: 1rem;
+}
+
+.conference .cost {
+    font-size: .85rem;
+}
+
+a.conference {
+    color: #333;
+    display: block;
+}
+
+a.conference:hover {
+    text-decoration: none;
+}
+
+.conference .session {
+    font-size: .85rem;
+    background-color: #df3136;
+    padding: 0.4rem;
+    border-radius: 4px;
+}
+
+.conference-details {
+    line-height: 1.5rem;
+    /*border-top: 1px solid #ccc;*/
+    padding: .5rem 0;
+    margin-top: 1rem;
+    font-size: .8rem;
+}
+
+.filters {
+    padding-top: 1em;
+}
+
+.left-sidebar {
+    /*position: fixed;*/
+}
+
+.filters a {
+    text-decoration: none;
+}
+
+.filter-group {
+    margin-bottom: 2rem;
+}
+
+.filter {
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    font-size: .8rem;
+    text-transform: uppercase;
+    padding: .5rem 0;
+    border-radius: 5px;
+    font-weight: 900;
+    /*background-color: #df3a5b;*/
+    color: #272727;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.filter:hover {
+    text-decoration: none;
+    background-color: #e8e8e8;
+}
+
+
+.filters .month {
+    border: 1px solid #e3e3e3;
+    font-size: .7rem;
+    border-right: none;
+}
+
+.months .filter {
+    border-radius: 0;
+}
+
+.months .col-md-1:first-of-type .month {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.months .col-md-1:last-of-type .month {
+    border-right: 1px solid #e3e3e3;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.filters input {
+    font-size: .9rem;
+}
+
+.filter.button.active {
+    background-color: #40c6df;
+    color: #fff;
+}
+
+.months {
+    padding: 0 15px;
+}
+
+
+.months > div {
+    padding: 0;
 }
