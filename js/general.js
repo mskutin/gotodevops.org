@@ -12,7 +12,7 @@ Vue.component('month-buttons', {
         </div>
     `,
     methods: {
-        applyMonths: function(value, key) {
+        applyMonths: function (value, key) {
             const index = this.months.indexOf(value.title);
 
             // Add or remove month from this.months array
@@ -29,7 +29,7 @@ Vue.component('month-buttons', {
             this.$emit('apply-months', this.months);
         }
     },
-    data () {
+    data() {
         return {
             months: [],
             buttons: {
@@ -97,16 +97,33 @@ Vue.component('conference', {
         <div>
             <a href="#" class="conference" aria-expanded="false" aria-controls="collapse">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <div class="name">{{ conference.name }}</div>
                         <div class="location text-muted city"><i class="fas fa-map-marker-alt"></i>&nbsp; {{
                             conference.location.city }}, {{ conference.location.country}}
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4 details">
                         <div class="row">
-                            <div class="col-md-12 date">
-                                <span class="float-right"><i class="far fa-calendar-alt"></i>&nbsp; {{ conference.date }}</span>
+                            <div class="col-md-7">
+                                <div class="date">
+                                    <div>📅 {{ conference.date }}</div>
+                                </div>
+                                <div class="cost">
+                                    <div v-if="conference.cost === 0">💰 FREE</div>
+                                    <div v-if="conference.cost === 1">💰 < $300 / day</div>
+                                    <div v-if="conference.cost === 2">💰 < $600 / day</div>
+                                    <div v-if="conference.cost === 3">💰 > $600 / day</div>
+                                    <div v-if="conference.cost === 'unknown'">💰 ???</div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="weather">
+                                    <div v-if="conference.weather.day < 10">❄️️</div>
+                                    <div v-if="conference.weather.day >= 10 && conference.weather.day < 20">⛅</div>
+                                    <div v-if="conference.weather.day >= 20">☀️</div>
+                                    <div class="temperature">{{ conference.weather.day }}℃ / {{ conference.weather.night }}℃</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,7 +145,7 @@ Vue.component('weather-buttons', {
         </div>
     `,
     methods: {
-        applyWeather: function(value, key) {
+        applyWeather: function (value, key) {
             // Toggle the pressed button active value
             this.buttons[key].active = !this.buttons[key].active;
 
@@ -146,7 +163,7 @@ Vue.component('weather-buttons', {
             }
         }
     },
-    data () {
+    data() {
         return {
             buttons: {
                 cold: {
@@ -190,7 +207,7 @@ Vue.component('price-buttons', {
         </div>
     `,
     methods: {
-        applyPrice: function(value, key) {
+        applyPrice: function (value, key) {
             // Toggle the pressed button active value
             this.buttons[key].active = !this.buttons[key].active;
 
@@ -211,7 +228,7 @@ Vue.component('price-buttons', {
             }
         }
     },
-    data () {
+    data() {
         return {
             buttons: {
                 free: {
@@ -235,97 +252,96 @@ Vue.component('price-buttons', {
 });
 
 new Vue({
-        el: '#conferences',
-        data: {
-            conferences: window.conferences,
-            months: [],
-            cost: null,
-            temperature: {
-                low: null,
-                high: null
-            },
-            city: '',
-            country: '',
-            speaker: '',
-            session: ''
-
+    el: '#app',
+    data: {
+        conferences: window.conferences,
+        months: [],
+        cost: null,
+        temperature: {
+            low: null,
+            high: null
         },
-        methods: {
-            filterPrice: function() {
-                console.log('button pressed');
-            },
-            updateCost: function(costValue) {
-                this.cost = costValue;
-            },
-            updateWeather: function(temperatureLow, temperatureHigh) {
-                this.temperature.low = temperatureLow;
-                this.temperature.high = temperatureHigh;
-            },
-            updateMonths: function(months) {
-                this.months = months;
-            }
+        city: '',
+        country: '',
+        speaker: '',
+        session: ''
+
+    },
+    methods: {
+        filterPrice: function () {
+            console.log('button pressed');
         },
-        computed: {
-            filteredConferences() {
-                return this.conferences.filter(conference => {
-                    let cityMatch = conference.location.city.toLowerCase().indexOf(this.city.toLowerCase()) > -1;
-                    let countryMatch = conference.location.country.toLowerCase().indexOf(this.country.toLowerCase()) > -1;
-                    let speakerMatch = false;
-                    let sessionMatch = false;
-                    let costMatch = false;
-                    let weatherMatch = false;
-                    let monthsMatch = true;
-
-                    const date = new Date(conference.startDate * 1000);
-                    const locale = 'en-us';
-                    const conferenceMonth = date.toLocaleString(locale, { month: "short" }).toUpperCase();
-
-                    if (this.months.length === 0) {
-                       monthsMatch = true;
-                    } else {
-                        monthsMatch = this.months.indexOf(conferenceMonth) > -1;
-                    }
-
-
-
-                    if (this.temperature.low === null && this.temperature.high === null) {
-                        weatherMatch = true;
-                    } else if (conference.weather.day >= this.temperature.low && conference.weather.day <= this.temperature.high) {
-                        weatherMatch = true;
-                    }
-
-                    if (this.cost === null) {
-                        costMatch = true;
-                    } else {
-                        costMatch = conference.cost <= this.cost;
-                    }
-
-
-                    if (conference.sessions.length === 0 && this.speaker === '') {
-                        speakerMatch = true;
-                    } else {
-                        for (let session of conference.sessions) {
-                            if (session.speaker.toLowerCase().indexOf(this.speaker.toLowerCase()) > -1) {
-                                speakerMatch = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (conference.sessions.length === 0 && this.session === '') {
-                        sessionMatch = true;
-                    } else {
-                        for (let session of conference.sessions) {
-                            if (session.title.toLowerCase().indexOf(this.session.toLowerCase()) > -1) {
-                                sessionMatch = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    return cityMatch && countryMatch && costMatch && weatherMatch && monthsMatch && speakerMatch && sessionMatch;
-                })
-            }
+        updateCost: function (costValue) {
+            this.cost = costValue;
+        },
+        updateWeather: function (temperatureLow, temperatureHigh) {
+            this.temperature.low = temperatureLow;
+            this.temperature.high = temperatureHigh;
+        },
+        updateMonths: function (months) {
+            this.months = months;
         }
-    })
+    },
+    computed: {
+        filteredConferences() {
+            return this.conferences.filter(conference => {
+                let cityMatch = conference.location.city.toLowerCase().indexOf(this.city.toLowerCase()) > -1;
+                let countryMatch = conference.location.country.toLowerCase().indexOf(this.country.toLowerCase()) > -1;
+                let speakerMatch = false;
+                let sessionMatch = false;
+                let costMatch = false;
+                let weatherMatch = false;
+                let monthsMatch = true;
+
+                const date = new Date(conference.startDate * 1000);
+                const locale = 'en-us';
+                const conferenceMonth = date.toLocaleString(locale, {month: "short"}).toUpperCase();
+
+                if (this.months.length === 0) {
+                    monthsMatch = true;
+                } else {
+                    monthsMatch = this.months.indexOf(conferenceMonth) > -1;
+                }
+
+
+                if (this.temperature.low === null && this.temperature.high === null) {
+                    weatherMatch = true;
+                } else if (conference.weather.day >= this.temperature.low && conference.weather.day <= this.temperature.high) {
+                    weatherMatch = true;
+                }
+
+                if (this.cost === null) {
+                    costMatch = true;
+                } else {
+                    costMatch = conference.cost <= this.cost;
+                }
+
+
+                if (conference.sessions.length === 0 && this.speaker === '') {
+                    speakerMatch = true;
+                } else {
+                    for (let session of conference.sessions) {
+                        if (session.speaker.toLowerCase().indexOf(this.speaker.toLowerCase()) > -1) {
+                            speakerMatch = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (conference.sessions.length === 0 && this.session === '') {
+                    sessionMatch = true;
+                } else {
+                    for (let session of conference.sessions) {
+                        if (session.title.toLowerCase().indexOf(this.session.toLowerCase()) > -1) {
+                            sessionMatch = true;
+                            break;
+                        }
+                    }
+                }
+
+                return cityMatch && countryMatch && costMatch && weatherMatch && monthsMatch && speakerMatch && sessionMatch;
+            })
+        }
+    }
+})
 ;

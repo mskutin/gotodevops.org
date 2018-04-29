@@ -1,80 +1,64 @@
+/***** COMMON *****/
+
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 body {
     font-family: Roboto, Helvetica, Arial sans-serif;
     font-size: 19px;
     color: #333;
 }
 
-.header {
-    margin: 2rem 0 4rem;
-    border-bottom: 1px solid #d4d4d4;
+h1 {
+    font-size: 1.25rem;
 }
 
-.header h1 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #333;
+.navbar, .filters, .conferences {
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-thead {
-    background-color: blue;
-    color: white;
+.form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
 }
 
-footer {
-    text-align: center;
+/***** NAVBAR *****/
+
+nav li {
+    font-size: .875rem;
+    font-weight: bold;
 }
 
-.conference {
-    border-bottom: 1px solid #d4d4d4;
-    padding: .75rem 0;
-}
-
-.conference .name{
-    /*font-size: 1.2rem;*/
-}
-
-.conference .location {
-    font-size: .85rem;
-}
-
-.conference .date {
-    font-size: 1rem;
-}
-
-.conference .cost {
-    font-size: .85rem;
-}
-
-a.conference {
-    color: #333;
-    display: block;
-}
-
-a.conference:hover {
-    text-decoration: none;
-}
-
-.conference .session {
-    font-size: .85rem;
-    background-color: #df3136;
-    padding: 0.4rem;
-    border-radius: 4px;
-}
-
-.conference-details {
-    line-height: 1.5rem;
-    /*border-top: 1px solid #ccc;*/
-    padding: .5rem 0;
-    margin-top: 1rem;
+.slogan {
     font-size: .8rem;
 }
 
-.filters {
-    padding-top: 1em;
+.subscription {
+    margin-left: 3rem;
+    padding-top: .7rem;
+    padding-bottom: 0;
 }
 
-.left-sidebar {
-    /*position: fixed;*/
+.subscription button {
+    background-color: #E37B40;
+    border: none;
+}
+
+
+/***** FILTERS *****/
+
+.filters {
+    position: absolute;
+    top: 120px;
+    bottom: 0;
+    left: 0;
+    overflow-y: scroll;
+    padding-top: .75rem;
+    border-right: 1px solid #ececec;
 }
 
 .filters a {
@@ -94,7 +78,7 @@ a.conference:hover {
     border-radius: 5px;
     font-weight: 900;
     /*background-color: #df3a5b;*/
-    color: #272727;
+    color: #324D5C;
     background-color: #f1f1f1;
     cursor: pointer;
 }
@@ -103,7 +87,6 @@ a.conference:hover {
     text-decoration: none;
     background-color: #e8e8e8;
 }
-
 
 .filters .month {
     border: 1px solid #e3e3e3;
@@ -131,7 +114,7 @@ a.conference:hover {
 }
 
 .filter.button.active {
-    background-color: #40c6df;
+    background-color: #e6616d;
     color: #fff;
 }
 
@@ -139,7 +122,91 @@ a.conference:hover {
     padding: 0 15px;
 }
 
-
 .months > div {
     padding: 0;
 }
+
+/***** CONFERENCES *****/
+
+.conferences {
+    position: absolute;
+    top: 120px;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+}
+
+.conference {
+    border-bottom: 1px solid #ececec;
+    padding: .75rem 0;
+}
+
+.conference .name {
+    color: #DE5B49;
+}
+
+.conference .location {
+    font-size: .85rem;
+    color: #324D5C !important;
+}
+
+.conference .date {
+    font-size: .8rem;
+    padding: .5rem 0;
+}
+
+.conference .cost {
+    font-size: .8rem;
+}
+
+.conference .weather {
+    padding: .5rem 0;
+    text-align: center;
+}
+
+.conference .temperature {
+    font-size: .75rem;
+}
+
+a.conference {
+    color: #333;
+    display: block;
+}
+
+a.conference:hover {
+    text-decoration: none;
+}
+
+.conference .session {
+    font-size: .85rem;
+    background-color: #df3136;
+    padding: 0.4rem;
+    border-radius: 4px;
+}
+
+.conference .details {
+    background: #f1f1f1;
+    min-height: 4rem;
+    border-radius: 5px;
+    color: #444;
+}
+
+.conference-details {
+    line-height: 1.5rem;
+    padding: .5rem 0;
+    margin-top: 1rem;
+    font-size: .8rem;
+}
+
+/***** FOOTER *****/
+
+footer {
+    background: red;
+    color: white;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    /*position: absolute;*/
+    /*bottom: 0px; left: 0;*/
+}
+
